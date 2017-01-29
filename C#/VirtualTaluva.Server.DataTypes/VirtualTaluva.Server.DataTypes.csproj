@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FCDF88C3-BA2F-4C06-AA9A-6ACE1355A37E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VirtualTaluva.Server.DataTypes</RootNamespace>
+    <AssemblyName>VirtualTaluva.Server.DataTypes</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Com.Ericmas001.Common, Version=0.4.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Com.Ericmas001.Common.0.4.6\lib\net40\Com.Ericmas001.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VirtualTaluva.Protocol">
+      <HintPath>..\..\..\Protocol\C#\VirtualTaluva.Protocol\bin\Debug\VirtualTaluva.Protocol.dll</HintPath>
+    </Reference>
+    <Reference Include="VirtualTaluva.Protocol.DataTypes">
+      <HintPath>..\..\..\Protocol\C#\VirtualTaluva.Protocol.DataTypes\bin\Debug\VirtualTaluva.Protocol.DataTypes.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AbstractDealer.cs" />
+    <Compile Include="Attributes\GameVariantAttribute.cs" />
+    <Compile Include="CardHolder.cs" />
+    <Compile Include="Enums\GameStateEnum.cs" />
+    <Compile Include="EventHandling\LogClientIdentificationEventArg.cs" />
+    <Compile Include="EventHandling\LogGameEventArg.cs" />
+    <Compile Include="EventHandling\LogClientCreationEventArg.cs" />
+    <Compile Include="EventHandling\LogTableCreationEventArg.cs" />
+    <Compile Include="EventHandling\ModuleEventArg.cs" />
+    <Compile Include="EventHandling\PokerGameObserver.cs" />
+    <Compile Include="EventHandling\MinMaxEventArgs.cs" />
+    <Compile Include="EventHandling\ActionNeededEventArgs.cs" />
+    <Compile Include="EventHandling\PotWonEventArgs.cs" />
+    <Compile Include="EventHandling\LogCommandEventArg.cs" />
+    <Compile Include="EventHandling\SuccessEventArg.cs" />
+    <Compile Include="IGameModule.cs" />
+    <Compile Include="IPokerPlayer.cs" />
+    <Compile Include="IPokerGame.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="PlayerCardHolder.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Protocol\CommandEntry.cs" />
+    <Compile Include="Protocol\GameCommandEntry.cs" />
+    <Compile Include="Protocol\IBluffinClient.cs" />
+    <Compile Include="Protocol\IBluffinLobby.cs" />
+    <Compile Include="Protocol\IBluffinServer.cs" />
+    <Compile Include="UserInfo.cs" />
+    <Compile Include="WonPot.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
