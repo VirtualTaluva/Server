@@ -4,10 +4,10 @@ using VirtualTaluva.Server.DataTypes.Attributes;
 
 namespace VirtualTaluva.Server.Logic.GameVariants
 {
-    [GameVariant(GameSubTypeEnum.ThreeCardsHoldem)]
+    [GameVariant(GameSubTypeEnum.Standard)]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public class ThreeCardsHoldemVariant : AbstractHoldemGameVariant
+    public class StandardVariant : AbstractStandardGameVariant
     {
-        protected override int NbCardsInHand => 3;
+      
     }
 }

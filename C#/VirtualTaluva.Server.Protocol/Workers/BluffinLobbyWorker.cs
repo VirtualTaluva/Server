@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using VirtualTaluva.Protocol;
 using VirtualTaluva.Server.DataTypes;
 using VirtualTaluva.Server.Logic;
@@ -74,7 +76,7 @@ namespace VirtualTaluva.Server.Protocol.Workers
             }
             else
             {
-                client.SendCommand(c.ResponseFailure(BluffinMessageId.NameAlreadyUsed,"The name is already used on the server!"));
+                client.SendCommand(c.ResponseFailure(TaluvaMessageId.NameAlreadyUsed,"The name is already used on the server!"));
             }
         }
 
@@ -94,8 +96,10 @@ namespace VirtualTaluva.Server.Protocol.Workers
 
         private void OnCheckCompatibilityCommandReceived(AbstractCommand command, IBluffinClient client)
         {
-            const string MINIMUM_CLIENT_VERSION = "3.0";
-            const string CURRENT_SERVER_VERSION = "3.1.0";
+            const string MINIMUM_CLIENT_VERSION = "0.0.2.0";
+
+            Assembly assembly = typeof(AbstractCommand).Assembly;
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
 
             var c = (CheckCompatibilityCommand)command;
             Version vClient; 
@@ -106,44 +110,26 @@ namespace VirtualTaluva.Server.Protocol.Workers
             Logger.LogClientAdditionalInfo(client);
             if (!ok || vClient < new Version(MINIMUM_CLIENT_VERSION))
             {
-                var r = c.ResponseFailure(BluffinMessageId.NotSupported, "The client must implement at least protocol version " + MINIMUM_CLIENT_VERSION);
-                r.ImplementedProtocolVersion = CURRENT_SERVER_VERSION;
+                var r = c.ResponseFailure(TaluvaMessageId.NotSupported, "The client must implement at least protocol version " + MINIMUM_CLIENT_VERSION);
+                r.ImplementedProtocolVersion = fvi.FileVersion;
+                r.ServerIdentification = Server.Identification;
                 client.SendCommand(r);
             }
             else
             {
                 var r = c.ResponseSuccess();
-                r.ImplementedProtocolVersion = CURRENT_SERVER_VERSION;
+                r.ImplementedProtocolVersion = fvi.FileVersion;
+                r.ServerIdentification = Server.Identification;
                 r.SupportedLobbyTypes = new[] {LobbyTypeEnum.QuickMode, LobbyTypeEnum.RegisteredMode};
                 r.AvailableGames = new[]
                 {
                     new GameInfo
                     {
-                        AvailableBlinds = new [] {BlindTypeEnum.Blinds},
-                        AvailableLimits = new []{LimitTypeEnum.NoLimit},
-                        AvailableVariants = RuleFactory.Variants.Values.Where(x => x.GameType == GameTypeEnum.CommunityCardsPoker).Select(x => x.Variant).ToArray(),
-                        GameType = GameTypeEnum.CommunityCardsPoker,
-                        MaxPlayers = 10,
+                        AvailableVariants = RuleFactory.Variants.Values.Where(x => x.GameType == GameTypeEnum.Standard).Select(x => x.Variant).ToArray(),
+                        GameType = GameTypeEnum.Standard,
+                        MaxPlayers = 4,
                         MinPlayers = 2
                     },
-                    new GameInfo
-                    {
-                        AvailableBlinds = new [] {BlindTypeEnum.Antes},
-                        AvailableLimits = new []{LimitTypeEnum.NoLimit},
-                        AvailableVariants = RuleFactory.Variants.Values.Where(x => x.GameType == GameTypeEnum.StudPoker).Select(x => x.Variant).ToArray(),
-                        GameType = GameTypeEnum.StudPoker,
-                        MaxPlayers = 10,
-                        MinPlayers = 2
-                    },
-                    new GameInfo
-                    {
-                        AvailableBlinds = new [] {BlindTypeEnum.Antes},
-                        AvailableLimits = new []{LimitTypeEnum.NoLimit},
-                        AvailableVariants = RuleFactory.Variants.Values.Where(x => x.GameType == GameTypeEnum.DrawPoker).Select(x => x.Variant).ToArray(),
-                        GameType = GameTypeEnum.DrawPoker,
-                        MaxPlayers = 10,
-                        MinPlayers = 2
-                    }
                 };
                 client.SendCommand(r);
             }
@@ -155,7 +141,7 @@ namespace VirtualTaluva.Server.Protocol.Workers
             var c = (GetUserCommand)command;
             var u = DataManager.Persistance.Get(client.PlayerName);
             if(u == null)
-                client.SendCommand(c.ResponseFailure(BluffinMessageId.UsernameNotFound, "Your username was not in the database. That's weird !"));
+                client.SendCommand(c.ResponseFailure(TaluvaMessageId.UsernameNotFound, "Your username was not in the database. That's weird !"));
             else
             {
                 var r = c.ResponseSuccess();
@@ -184,13 +170,13 @@ namespace VirtualTaluva.Server.Protocol.Workers
                         client.SendCommand(c.ResponseSuccess());
                     }
                     else
-                        client.SendCommand(c.ResponseFailure(BluffinMessageId.NameAlreadyUsed, "The name is already used on the server!"));
+                        client.SendCommand(c.ResponseFailure(TaluvaMessageId.NameAlreadyUsed, "The name is already used on the server!"));
                 }
                 else
-                    client.SendCommand(c.ResponseFailure(BluffinMessageId.InvalidPassword, "Wrong Password!"));
+                    client.SendCommand(c.ResponseFailure(TaluvaMessageId.InvalidPassword, "Wrong Password!"));
             }
             else
-                client.SendCommand(c.ResponseFailure(BluffinMessageId.UsernameNotFound, "Your username was not in the database!"));
+                client.SendCommand(c.ResponseFailure(TaluvaMessageId.UsernameNotFound, "Your username was not in the database!"));
             Logger.LogInformation("> Client authenticate to RegisteredMode Server as : {0}. Success={1}", c.Username, ok);
         }
 
@@ -207,10 +193,10 @@ namespace VirtualTaluva.Server.Protocol.Workers
                     client.SendCommand(c.ResponseSuccess());
                 }
                 else
-                    client.SendCommand(c.ResponseFailure(BluffinMessageId.NameAlreadyUsed, "The display name is already used on the server!"));
+                    client.SendCommand(c.ResponseFailure(TaluvaMessageId.NameAlreadyUsed, "The display name is already used on the server!"));
             }
             else
-                client.SendCommand(c.ResponseFailure(BluffinMessageId.UsernameAlreadyUsed, "The username is already used on the server!"));
+                client.SendCommand(c.ResponseFailure(TaluvaMessageId.UsernameAlreadyUsed, "The username is already used on the server!"));
 
             Logger.LogInformation("> Client register to RegisteredMode Server as : {0}. Success={1}", c.Username, ok);
         }
@@ -247,19 +233,19 @@ namespace VirtualTaluva.Server.Protocol.Workers
             var game = (PokerGame)Lobby.GetGame(c.TableId);
             if (game == null || !game.IsRunning)
             {
-                client.SendCommand(c.ResponseFailure(BluffinMessageId.WrongTableState, "You can't join a game that isn't running !"));
+                client.SendCommand(c.ResponseFailure(TaluvaMessageId.WrongTableState, "You can't join a game that isn't running !"));
                 return;
             }
             var table = game.Table;
             if (table.Seats.Players().ContainsPlayerNamed(client.PlayerName))
             {
-                client.SendCommand(c.ResponseFailure(BluffinMessageId.NameAlreadyUsed, "Someone with your name is already in this game !"));
+                client.SendCommand(c.ResponseFailure(TaluvaMessageId.NameAlreadyUsed, "Someone with your name is already in this game !"));
                 return;
             }
             var rp = new RemotePlayer(game, new PlayerInfo(client.PlayerName, 0), client, c.TableId);
             if (!rp.JoinGame())
             {
-                client.SendCommand(c.ResponseFailure(BluffinMessageId.SpecificServerMessage, "Unknown failure"));
+                client.SendCommand(c.ResponseFailure(TaluvaMessageId.SpecificServerMessage, "Unknown failure"));
                 return;
             }
 

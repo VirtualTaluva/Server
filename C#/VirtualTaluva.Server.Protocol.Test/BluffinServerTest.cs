@@ -24,7 +24,7 @@ namespace VirtualTaluva.Server.Protocol.Test
             StringWriter sw = new StringWriter();
             Logger.MessageLogged += (sender,e) =>  sw.WriteLine("[{0}] {1}", GetCaller(sender), e.Info);
 
-            var server = new BluffinServer(42084);
+            var server = new BluffinServer(42084, GetType().Assembly.FullName);
             var tokenServer = new CancellationTokenSource();
             Task.Factory.StartNew(server.Start, tokenServer.Token);
 
@@ -100,7 +100,7 @@ namespace VirtualTaluva.Server.Protocol.Test
         [TestMethod]
         public void TryJoinTableThatDoesNotExist()
         {
-            var server = new BluffinServer(42084);
+            var server = new BluffinServer(42084, GetType().Assembly.FullName);
             var tokenServer = new CancellationTokenSource();
             Task.Factory.StartNew(server.Start, tokenServer.Token);
 
@@ -232,7 +232,7 @@ namespace VirtualTaluva.Server.Protocol.Test
                 Params = new TableParams()
                 {
                     Blind = BlindTypeEnum.Blinds,
-                    Options = new GameTypeOptionsCommunity(),
+                    Options = new GameTypeOptionsStandard(),
                     GameSize = 10,
                     Limit = LimitTypeEnum.NoLimit,
                     Lobby = new LobbyOptionsQuickMode()
@@ -242,7 +242,7 @@ namespace VirtualTaluva.Server.Protocol.Test
                     MaxPlayers = 10,
                     MinPlayersToStart = 2,
                     TableName = "Table One",
-                    Variant = GameSubTypeEnum.TexasHoldem,
+                    Variant = GameSubTypeEnum.Standard,
                     WaitingTimes = new ConfigurableWaitingTimes()
                     {
                         AfterBoardDealed = 0,

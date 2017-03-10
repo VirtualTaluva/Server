@@ -76,5 +76,7 @@ namespace VirtualTaluva.Server.Protocol.Test.Mocking
         {
             return 42;
         }
+
+        public string Identification => GetType().Assembly.FullName;
     }
 }

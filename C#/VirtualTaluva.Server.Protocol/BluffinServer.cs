@@ -16,6 +16,7 @@ namespace VirtualTaluva.Server.Protocol
 {
     public class BluffinServer : IBluffinServer, IBluffinLobby
     {
+        private readonly string m_Ident;
         public BlockingCollection<CommandEntry> LobbyCommands { get; }
         public BlockingCollection<GameCommandEntry> GameCommands { get; }
 
@@ -33,8 +34,9 @@ namespace VirtualTaluva.Server.Protocol
             return m_Games[id];
         }
 
-        public BluffinServer(int port)
+        public BluffinServer(int port, string ident)
         {
+            m_Ident = ident;
             m_TcpServer = new LocalTcpServer(port, this);
             LobbyCommands = new BlockingCollection<CommandEntry>();
             GameCommands = new BlockingCollection<GameCommandEntry>();
@@ -100,5 +102,7 @@ namespace VirtualTaluva.Server.Protocol
                     PossibleAction = LobbyActionEnum.None,
                 }).ToList();
         }
+
+        public string Identification => m_Ident;
     }
 }

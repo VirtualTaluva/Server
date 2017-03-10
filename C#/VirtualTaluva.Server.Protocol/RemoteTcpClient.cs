@@ -34,7 +34,7 @@ namespace VirtualTaluva.Server.Protocol
                 Logger.LogCommandReceived(command, this, data);
                 switch (command.CommandType)
                 {
-                    case BluffinCommandEnum.General:
+                    case TaluvaCommandEnum.General:
                         m_BluffinServer.LobbyCommands.Add(new CommandEntry() { Client = this, Command = command });
                         lock (m_GamePlayers)
                         {
@@ -42,10 +42,10 @@ namespace VirtualTaluva.Server.Protocol
                                 m_BluffinServer.GameCommands.Add(new GameCommandEntry() { Client = this, Command = command, Player = p });
                         }
                         break;
-                    case BluffinCommandEnum.Lobby:
+                    case TaluvaCommandEnum.Lobby:
                         m_BluffinServer.LobbyCommands.Add(new CommandEntry() { Client = this, Command = command });
                         break;
-                    case BluffinCommandEnum.Game:
+                    case TaluvaCommandEnum.Game:
                         var gc = (AbstractGameCommand) command;
                         lock (m_GamePlayers)
                         {

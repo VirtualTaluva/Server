@@ -32,7 +32,7 @@ namespace VirtualTaluva.Server
         {
             try
             {
-                var server = new BluffinServer(config.Port);
+                var server = new BluffinServer(config.Port, typeof(Program).Assembly.FullName);
                 server.Start();
             }
             catch

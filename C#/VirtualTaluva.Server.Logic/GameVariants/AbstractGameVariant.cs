@@ -35,7 +35,7 @@ namespace VirtualTaluva.Server.Logic.GameVariants
                 var att = GetType().GetCustomAttribute<GameVariantAttribute>();
                 if (att != null)
                     return att.Variant;
-                return GameSubTypeEnum.TexasHoldem;
+                return GameSubTypeEnum.Standard;
             }
         }
 
@@ -46,7 +46,7 @@ namespace VirtualTaluva.Server.Logic.GameVariants
                 var att = Variant.GetAttribute<GameTypeAttribute>();
                 if (att != null)
                     return att.GameType;
-                return GameTypeEnum.CommunityCardsPoker;
+                return GameTypeEnum.Standard;
             }
         }
     }

@@ -36,9 +36,6 @@ namespace VirtualTaluva.Server.Logic.GameModules
             
             var firstPlayer = GetSeatOfTheFirstPlayer();
 
-            if (Table.Params.Options.OptionType == GameTypeEnum.StudPoker)
-                firstPlayer.AddAttribute(SeatAttributeEnum.FirstTalker);
-
             Table.Seats.ClearAttribute(SeatAttributeEnum.CurrentPlayer);
             Observer.RaiseGameBettingRoundStarted();
 

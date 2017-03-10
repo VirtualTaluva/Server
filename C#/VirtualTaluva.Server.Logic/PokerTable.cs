@@ -95,11 +95,6 @@ namespace VirtualTaluva.Server.Logic
             Cards = new string[0];
             NbPlayed = 0;
 
-            var previousDealer = m_DealerSeat;
-
-            if (Params.Options.OptionType != GameTypeEnum.StudPoker)
-                Seats.SeatOfPlayingPlayerNextTo(previousDealer).AddAttribute(SeatAttributeEnum.Dealer);
-
             m_DealerSeat = Seats.SeatOfDealer();
 
             foreach (var s in GetPlayersWhoNeedsToPutAntes())
@@ -252,16 +247,17 @@ namespace VirtualTaluva.Server.Logic
 
         private IEnumerable<SeatInfo> GetPlayersWhoNeedsToPutSmallBlind()
         {
-            if (Params.Blind != BlindTypeEnum.Blinds)
+            //if (Params.Blind != BlindTypeEnum.Blinds)
                 return new SeatInfo[0];
 
-            var smallSeat = Seats.SeatOfShouldBeSmallBlind();
-            return NewArrivals.Any(x => x.NoSeat == smallSeat.NoSeat) ? new SeatInfo[0] : new[] {smallSeat};
+            //var smallSeat = Seats.SeatOfShouldBeSmallBlind();
+            //return NewArrivals.Any(x => x.NoSeat == smallSeat.NoSeat) ? new SeatInfo[0] : new[] {smallSeat};
         }
 
         private IEnumerable<SeatInfo> GetPlayersWhoNeedsToPutBigBlind()
         {
-            return Params.Blind == BlindTypeEnum.Blinds ? NewArrivals.Select(x => Seats[x.NoSeat]).Union(new[] {Seats.SeatOfShouldBeBigBlind()}) : new SeatInfo[0];
+            return new SeatInfo[0];
+            //return Params.Blind == BlindTypeEnum.Blinds ? NewArrivals.Select(x => Seats[x.NoSeat]).Union(new[] {Seats.SeatOfShouldBeBigBlind()}) : new SeatInfo[0];
         }
 
         #endregion Public Methods
