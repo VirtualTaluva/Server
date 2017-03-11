@@ -13,7 +13,7 @@ namespace VirtualTaluva.Server.Logic.Extensions
         /// <returns>True if the amount of money is valid</returns>
         public static bool IsValidBuyIn(this TableParams t, int money)
         {
-            return t.Lobby.MinimumBuyInAmount(t.GameSize) <= money && money <= t.Lobby.MaximumBuyInAmount(t.GameSize);
+            return true;//t.Lobby.MinimumBuyInAmount(t.GameSize) <= money && money <= t.Lobby.MaximumBuyInAmount(t.GameSize);
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace VirtualTaluva.Server.Logic.Extensions
         /// <returns>The Gamesize or 2, if lower</returns>
         public static int BigBlindAmount(this TableParams t)
         {
-            return Math.Max(2, t.GameSize);
+            return 0;//Math.Max(2, t.GameSize);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace VirtualTaluva.Server.Logic.Extensions
         /// <returns>The Gamesize / 2 or 1, if lower</returns>
         public static int SmallBlindAmount(this TableParams t)
         {
-            return Math.Max(1, t.GameSize/2);
+            return 0;//Math.Max(1, t.GameSize/2);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace VirtualTaluva.Server.Logic.Extensions
         /// <returns>The Gamesize / 10 or 1, if lower</returns>
         public static int AnteAmount(this TableParams t)
         {
-            return Math.Max(1, t.GameSize/10);
+            return 0;//Math.Max(1, t.GameSize/10);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace VirtualTaluva.Server.Logic.Extensions
         /// <returns>The Gamesize or 2, if lower</returns>
         public static int BetAmount(this TableParams t)
         {
-            return Math.Max(2, t.GameSize);
+            return 0;//Math.Max(2, t.GameSize);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace VirtualTaluva.Server.Logic.Extensions
         /// <returns>The Gamesize / 2 or 1, if lower</returns>
         public static int HalfBetAmount(this TableParams t)
         {
-            return Math.Max(1, t.GameSize/2);
+            return 0;//Math.Max(1, t.GameSize/2);
         }
 
     }

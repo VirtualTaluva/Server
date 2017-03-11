@@ -47,7 +47,7 @@ namespace VirtualTaluva.Server.Logic.GameModules
             Table.MinimumRaiseAmount = Table.Params.BetAmount();
             InitModuleSpecific();
 
-            WaitALittle(Table.Params.WaitingTimes.AfterBoardDealed);
+            //WaitALittle(Table.Params.WaitingTimes.AfterBoardDealed);
 
             if (Table.Seats.PlayingPlayers().Count() <= 1 || Table.Seats.PlayingAndAllInPlayers().Count() == 1 || Table.NbPlayed >= Table.Seats.PlayingAndAllInPlayers().Count())
                 EndBettingRound();

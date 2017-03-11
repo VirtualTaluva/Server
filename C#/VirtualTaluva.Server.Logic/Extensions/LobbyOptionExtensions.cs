@@ -14,13 +14,13 @@ namespace VirtualTaluva.Server.Logic.Extensions
         /// <returns>The minimum amount needed to enter the game</returns>
         public static int MinimumBuyInAmount(this LobbyOptions lo, int gameSize)
         {
-            switch (lo.MinimumBuyInParameter)
-            {
-                case BuyInParameterEnum.FixedAmount:
-                    return lo.MinimumBuyInValue;
-                case BuyInParameterEnum.Multiplicator:
-                    return lo.MinimumBuyInValue * gameSize;
-            }
+            //switch (lo.MinimumBuyInParameter)
+            //{
+            //    case BuyInParameterEnum.FixedAmount:
+            //        return lo.MinimumBuyInValue;
+            //    case BuyInParameterEnum.Multiplicator:
+            //        return lo.MinimumBuyInValue * gameSize;
+            //}
             return 0;
         }
 
@@ -32,13 +32,13 @@ namespace VirtualTaluva.Server.Logic.Extensions
         /// <returns>The maximum amount you can put in the game</returns>
         public static int MaximumBuyInAmount(this LobbyOptions lo, int gameSize)
         {
-            switch (lo.MaximumBuyInParameter)
-            {
-                case BuyInParameterEnum.FixedAmount:
-                    return lo.MaximumBuyInValue;
-                case BuyInParameterEnum.Multiplicator:
-                    return lo.MaximumBuyInValue * gameSize;
-            }
+            //switch (lo.MaximumBuyInParameter)
+            //{
+            //    case BuyInParameterEnum.FixedAmount:
+            //        return lo.MaximumBuyInValue;
+            //    case BuyInParameterEnum.Multiplicator:
+            //        return lo.MaximumBuyInValue * gameSize;
+            //}
             return int.MaxValue;
         }
     }

@@ -15,11 +15,11 @@ namespace VirtualTaluva.Server.Logic.Test.PokerGameTests.DataTypes
             Parms = new TableParams()
             {
                 MaxPlayers = 2,
-                GameSize = 10,
-                Blind = BlindTypeEnum.Blinds,
+                //GameSize = 10,
+                //Blind = BlindTypeEnum.Blinds,
                 Lobby = new LobbyOptionsRegisteredMode()
                 {
-                    IsMaximumBuyInLimited = false
+                    //IsMaximumBuyInLimited = false
                 }
             };
 
@@ -133,7 +133,7 @@ namespace VirtualTaluva.Server.Logic.Test.PokerGameTests.DataTypes
         }
         public void ExecuteModule(TableParams parms)
         {
-            parms.Blind = m_Blind;
+            //parms.Blind = m_Blind;
         }
     }
 
@@ -150,7 +150,7 @@ namespace VirtualTaluva.Server.Logic.Test.PokerGameTests.DataTypes
         {
             parms.Lobby = new LobbyOptionsRegisteredMode()
             {
-                IsMaximumBuyInLimited = m_Limited
+                //IsMaximumBuyInLimited = m_Limited
             };
         }
     }

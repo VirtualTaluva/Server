@@ -96,7 +96,7 @@ namespace VirtualTaluva.Server.Protocol.Workers
 
         private void OnCheckCompatibilityCommandReceived(AbstractCommand command, IBluffinClient client)
         {
-            const string MINIMUM_CLIENT_VERSION = "0.0.2.0";
+            const string MINIMUM_CLIENT_VERSION = "0.0.3.0";
 
             Assembly assembly = typeof(AbstractCommand).Assembly;
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
@@ -257,11 +257,11 @@ namespace VirtualTaluva.Server.Protocol.Workers
             var r = c.ResponseSuccess();
 
             r.GameHasStarted = rp.Game.IsPlaying;
-            r.BoardCards = rp.Game.Table.Cards.Select(x => x.ToString()).ToArray();
+            //r.BoardCards = rp.Game.Table.Cards.Select(x => x.ToString()).ToArray();
             r.Seats = rp.AllSeats().ToList();
             r.Params = rp.Game.Table.Params;
-            r.TotalPotAmount = rp.Game.Table.Bank.MoneyAmount;
-            r.PotsAmount = rp.Game.Table.Bank.PotAmountsPadded(rp.Game.Table.Params.MaxPlayers).ToList();
+            //r.TotalPotAmount = rp.Game.Table.Bank.MoneyAmount;
+            //r.PotsAmount = rp.Game.Table.Bank.PotAmountsPadded(rp.Game.Table.Params.MaxPlayers).ToList();
 
             client.SendCommand(r);
         }
@@ -270,7 +270,10 @@ namespace VirtualTaluva.Server.Protocol.Workers
         {
             var c = (LeaveTableCommand)command;
             var game = (PokerGame)Lobby.GetGame(c.TableId);
-            game.LeaveGame(game.Table.Seats.Players().Single(x => x.Name == client.PlayerName));
+            var p = game.Table.Seats.Players().SingleOrDefault(x => x.Name == client.PlayerName);
+            if(p!= null)
+                game.LeaveGame(p);
+            Server.GameCommands.Add(new GameCommandEntry{Client = client, Command = new DisconnectCommand(),Player = ((RemoteTcpClient)client).GamePlayers[c.TableId]});
         }
     }
 }

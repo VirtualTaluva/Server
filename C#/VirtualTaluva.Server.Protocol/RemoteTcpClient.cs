@@ -19,6 +19,8 @@ namespace VirtualTaluva.Server.Protocol
         public string ClientIdentification { get; set; }
         public Version SupportedProtocol { get; set; }
 
+        public Dictionary<int, RemotePlayer> GamePlayers => m_GamePlayers;
+
         public RemoteTcpClient(TcpClient remoteEntity, IBluffinServer bluffinServer)
             : base(remoteEntity)
         {

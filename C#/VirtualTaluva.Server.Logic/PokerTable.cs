@@ -215,11 +215,11 @@ namespace VirtualTaluva.Server.Logic
                 return null;
             }
 
-            if (!Params.IsValidBuyIn(p.MoneyAmnt))
-            {
-                Logger.LogError("Player Money ({0}) is not between Minimum ({1}) and Maximum ({2})", p.MoneyAmnt, Params.Lobby.MinimumBuyInAmount(Params.GameSize), Params.Lobby.MaximumBuyInAmount(Params.GameSize));
-                return null;
-            }
+            //if (!Params.IsValidBuyIn(p.MoneyAmnt))
+            //{
+            //    Logger.LogError("Player Money ({0}) is not between Minimum ({1}) and Maximum ({2})", p.MoneyAmnt, Params.Lobby.MinimumBuyInAmount(Params.GameSize), Params.Lobby.MaximumBuyInAmount(Params.GameSize));
+            //    return null;
+            //}
 
             if (Seats.Players().ContainsPlayerWithSameName(p))
             {
@@ -242,7 +242,7 @@ namespace VirtualTaluva.Server.Logic
 
         private IEnumerable<SeatInfo> GetPlayersWhoNeedsToPutAntes()
         {
-            return Params.Blind == BlindTypeEnum.Antes ? Seats.PlayingPlayers().Select(x => Seats[x.NoSeat]) : new SeatInfo[0];
+            return new SeatInfo[0]; //Params.Blind == BlindTypeEnum.Antes ? Seats.PlayingPlayers().Select(x => Seats[x.NoSeat]) : new SeatInfo[0];
         }
 
         private IEnumerable<SeatInfo> GetPlayersWhoNeedsToPutSmallBlind()

@@ -79,7 +79,7 @@ namespace VirtualTaluva.Server.Protocol.Workers
             UserInfo userInfo = null;
             var c = (PlayerSitInCommand)command;
             if (p.Game.Table.Params.Lobby.OptionType == LobbyTypeEnum.QuickMode)
-                p.Player.MoneySafeAmnt = ((LobbyOptionsQuickMode)p.Game.Table.Params.Lobby).StartingAmount;
+                p.Player.MoneySafeAmnt = 1500;//((LobbyOptionsQuickMode)p.Game.Table.Params.Lobby).StartingAmount;
             else
             {
                 int money = c.MoneyAmount;

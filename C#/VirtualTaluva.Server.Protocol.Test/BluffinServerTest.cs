@@ -231,13 +231,13 @@ namespace VirtualTaluva.Server.Protocol.Test
             {
                 Params = new TableParams()
                 {
-                    Blind = BlindTypeEnum.Blinds,
+                    //Blind = BlindTypeEnum.Blinds,
                     Options = new GameTypeOptionsStandard(),
-                    GameSize = 10,
-                    Limit = LimitTypeEnum.NoLimit,
+                    //GameSize = 10,
+                    //Limit = LimitTypeEnum.NoLimit,
                     Lobby = new LobbyOptionsQuickMode()
                     {
-                        StartingAmount = 1500
+                        //StartingAmount = 1500
                     },
                     MaxPlayers = 10,
                     MinPlayersToStart = 2,
@@ -245,9 +245,9 @@ namespace VirtualTaluva.Server.Protocol.Test
                     Variant = GameSubTypeEnum.Standard,
                     WaitingTimes = new ConfigurableWaitingTimes()
                     {
-                        AfterBoardDealed = 0,
+                        //AfterBoardDealed = 0,
                         AfterPlayerAction = 0,
-                        AfterPotWon = 0
+                        //AfterPotWon = 0
                     }
                 }
             };
